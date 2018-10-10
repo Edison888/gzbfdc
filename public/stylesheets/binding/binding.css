@@ -1,4 +1,4 @@
-body {
+ body {
     font-family: "黑体", sans-serif;
     font-size: small;
 }
@@ -8,6 +8,6 @@ h3, h4, div, body, .col-xs-12, .col-md-4 {
     padding: 0;
 }
 
-td {
-    text-align: center;
+tr>th,td {
+    text-align: right;
 }

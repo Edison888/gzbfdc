@@ -363,6 +363,7 @@ app.controller('list_controller', function ($scope, $http, $document, $location,
                             $scope.users[currentIndex]['ncuser_name'] = $scope.currentSelectedNcUser.ncuser_name;
                             $scope.users[currentIndex]['ncmobile'] = $scope.currentSelectedNcUser.ncmobile;
                             toastr.success("绑定成功");
+                             //$scope.filterUnBindNCUserY();
                         }
                     }
                 } else {
@@ -408,56 +409,14 @@ app.controller('list_controller', function ($scope, $http, $document, $location,
                             $scope.users[currentIndex]['myusername'] = $scope.currentSelectedMyUser.user_name;
                             // $scope.users[currentIndex]['mymobile'] = $scope.currentSelectedMyUser.mobile;
                             toastr.success("绑定成功");
+                              //$scope.filterUnBindNCUserY();
                         }
                     }
                 } else {
                     toastr.error(response.desc);
                 }
 
-            })  //success
-            .error(function () {
-                         console.log("错误");
-                        })
-
-    };
-    $scope.bindAD = function () {
-        console.log($scope.currentSelectedAdUser);
-        document.getElementById('spinner').style.visibility = 'visible';
-        $http(
-            {
-                method: 'get',
-                url: requrl1,
-                params: {
-                    addept: $scope.currentSelectedAdUser.dept,
-                    adname: $scope.currentSelectedAdUser.sAMAccountName,
-                    yzjid: $scope.currentUser.yzjid,
-                    method: 'bindADUser',
-                }
-            }
-        ).success(function (response) {
-                document.getElementById('spinner').style.visibility = 'hidden';
-                console.log(response)
-                $scope.disableBind();
-                console.log(response)
-                if (response.flag == 0) {// todo 125
-                    var currentIndex = '';
-                    for (var i = 0; i < $scope.users.length; i++) {// todo 125
-                        console.log("进入")
-                        if ($scope.users[i]['yzjid'] == $scope.currentUser.yzjid) {
-                            currentIndex = i;
-                            $scope.users[currentIndex]['adname'] = $scope.currentSelectedAdUser.sAMAccountName;
-                            $scope.users[currentIndex]['addept'] = $scope.currentSelectedAdUser.dept;
-                            toastr.success("绑定成功");
-                        }
-                    }
-                } else {
-                    toastr.error(response.desc);
-                }
-
-            })  //success
-            .error(function () {
-                         console.log("错误");
-                        })
+            });  //success
 
     };
     $scope.disableBind = function () {
@@ -472,19 +431,13 @@ app.controller('list_controller', function ($scope, $http, $document, $location,
     $scope.selectMyUser = function (myUser) {
         $("#binding1").removeAttr("disabled", false);
         document.getElementById("binding1").style.backgroundColor = "#3cbaff";
+        console.log(1);
         $scope.currentSelectedMyUser = myUser;
-    };
-    $scope.selectAdUser = function (adUser) {
-        $("#binding2").removeAttr("disabled", false);
-        document.getElementById("binding2").style.backgroundColor = "#3cbaff";
-        console.log("ad");
-        $scope.currentSelectedAdUser = adUser;
     };
     $scope.getYzjData = function (user) {
         console.log(user);
         $scope.ncusers = [];
         $scope.myusers=[];
-        $scope.adusers=[];
         $scope.currentUser = {
             yzjid: user.yzjid,
             yzjmobile: user.yzjmobile,
@@ -537,30 +490,6 @@ app.controller('list_controller', function ($scope, $http, $document, $location,
                 }
             } else {
                 console.log("myerror")
-                toastr.error(response.desc);
-            }
-        });
-        $http({
-            method: 'get',
-            url: requrl1,
-            headers:{
-                "Content-Type" : "application/json"
-            },
-            params: {
-                username: user.yzjname,
-                method: 'getADUserInfo'
-            }
-        }).success(function (response) {
-            document.getElementById('spinner').style.visibility = 'hidden';
-            console.log(response);
-            $scope.adusers = [];
-            if (response.flag==0) {
-                if (response.data.length > 0) {
-                    $scope.adusers = response.data;
-                    console.log($scope.adusers)
-                }
-            } else {
-                console.log("aderror")
                 toastr.error(response.desc);
             }
         });

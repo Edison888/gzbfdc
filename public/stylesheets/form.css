@@ -1,3 +1,13 @@
 .spls thead tr th{
 	text-align:center;
 }
+.spls thead tr>th:nth-child(3n){
+    width:60%!important;
+}
+.spls tbody tr>td:nth-child(3n){
+	width:60% !important;
+	line-height: 20px;
+	word-wrap:break-word !important;
+	white-space: pre-wrap !important;
+	word-break: break-all !important;
+}

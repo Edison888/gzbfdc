@@ -12,7 +12,10 @@ var host_test = "http://61.136.222.246:9081";//was测试环境
 //var host_test = 'http://61.136.222.246:6666';//新标准测试服务
 //var host_test = 'http://61.136.222.246:8088';//新标准测试服务
 var common_biz_url = "/servlet/MobileApproveServlet";
+var common_biz_url2 = "/servlet/ADServlet";
 var requrl = (debug ? host_test : host_produce) + common_biz_url;
+var requrl1 = (debug ? host_test : host_produce) + common_biz_url2;
+
 
 
 //-----区分不同表单类型-------------------------------

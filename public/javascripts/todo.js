@@ -198,6 +198,15 @@ app.controller('matters', function ($scope, $http, $cookieStore, $window) {
                         $scope.getMatters('todounhd');
                         $scope.getMatters('subhd');
                         $scope.getMatters('subunhd');
+			//获取url中的参数
+                        function getUrlParam(name) {
+                            var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
+                            var r = window.location.search.substr(1).match(reg);  //匹配目标参数
+                            if (r != null) return unescape(r[2]); return null; //返回参数值
+                        }
+                            
+                        var ticket = getUrlParam('ticket');
+
                         $scope.goDetail = function (matter, type) {
                             var uri = new URI('/form');
                             uri.addQuery('taskid', matter.taskid);
@@ -207,7 +216,14 @@ app.controller('matters', function ($scope, $http, $cookieStore, $window) {
                             uri.addQuery('billid', matter.billid);
                             uri.addQuery('isFromApp', false);//记录来自App还是轻应用
                             uri.addQuery('type', type);//跳转到表单详情页面时，携带了type参数，用来告知表单详情页面过来的这个待办是哪种类型的待办。
-                            window.location = uri.toString();
+                            //window.location = uri.toString();
+			             if(matter.spurl){
+                            //uri.addQuery('ticket', ticket);
+			//console.log("ticket.url为:"+uri);
+                                window.location = matter.spurl+"&ticket="+ticket;
+                            }else{
+                                window.location = uri.toString();
+                            }
                         };
                     }//func
                 );//xuntong
